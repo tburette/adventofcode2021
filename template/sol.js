@@ -1,6 +1,6 @@
 "use strict";
 const fs = require('fs')
-
+process.chdir(__dirname); // work when launched from any current directory
 let data = fs.readFileSync('input', 'utf8');
 data = data.trim().split("\n");
 // data = data.map(Number)
