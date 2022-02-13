@@ -56,6 +56,31 @@ function part1(data){
 }
 part1(data);
 
+function part2(lines){
+    let incompletes = lines.filter((line)=>validate(line)[0] == null);
+    incompletes = incompletes.map((line)=>validate(line)[1]);
+
+    function scoreIncomplete(incomplete){
+        const scoring = {
+            ")": 1,
+            "]": 2,
+            "}": 3,
+            ">":4
+        }
+        let incompleteScore = 0;
+        for(let c of incomplete){
+            incompleteScore *= 5;
+            incompleteScore += scoring[c];
+        }
+        return incompleteScore;
+    }
+
+    let score = incompletes.map(scoreIncomplete);
+    score = score.sort((a, b)=>a-b);
+    console.log(score[Math.floor(score.length/2)]);
+}
+part2(data);
+
 /* Learned:
 - can iterate on strings easily (for..of)
 - lost time because I mixed-up charAt and indexOf
