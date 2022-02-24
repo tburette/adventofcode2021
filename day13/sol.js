@@ -80,6 +80,43 @@ function sortDots(dots){
 let dotsAfterFirstFold = fold(dots, ...folds[0]);
 let dotsAfterSecondFold = fold(dotsAfterFirstFold, ...folds[1]);
 
-console.log(dotsAfterFirstFold.length);
+// console.log(dotsAfterFirstFold.length);
 //866 too high
 
+//part2
+let folded = folds.reduce((dots, foldInstruction)=>{
+    return fold(dots, ...foldInstruction);
+}, dots);
+
+
+function groupByRows(dots){
+    let sortedDots = sortDots(dots)
+    let maxX = Math.max(...sortedDots.map(([x, y])=>x));
+    // console.log(sortedDots);
+    // for in on rows will be in numeric order
+    let rows = {};
+    for(let [x, y] of sortedDots){
+        if(!(y in rows)) rows[y] = new Array(maxX+1).fill(' ');
+        rows[y][x] = "x";
+    }
+
+    return rows;
+}
+
+function printDots(dots) {
+    let groupedDots = groupByRows(dots);
+    // console.log(groupedDots);
+    for(let row in groupedDots){
+        console.log(groupedDots[row].join(""));
+    }
+}
+
+printDots(folded);
+
+
+/**
+ * - Math error in fold computation : foldPosition-x instead of x-foldPosition
+ * - wanted a sorted copy of an array.
+ *   Used array.sort instead of Array.from(array).sort
+ * - used for..in instead of for..off
+ */
